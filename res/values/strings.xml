@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FlashNotifTester</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="p1">Preset 1</string>
+    <string name="p2">Preset 2</string>
+    <string name="p3">Preset 3</string>
+    <string name="flash_on">Number of milliseconds flash is on:</string>
+	<string name="flash_off">Number of milliseconds flash is off:</string>
+	<string name="repeats">Number of times sequence repeated (Total sequence can\'t exceed 10):</string>
+	<string name="bot_left">Create Pattern</string>
+	<!-- <string name="bot_center">Append to Prevoius Pattern</string> -->
+	<string name="bot_right">Test Current Pattern</string>
+</resources>
