@@ -8,8 +8,8 @@
     <string name="p2">Preset 2</string>
     <string name="p3">Preset 3</string>
     <string name="flash_on">Number of milliseconds flash is on (should not exceed 500ms):</string>
-	<string name="flash_off">Number of milliseconds flash is off:</string>
-	<string name="repeats">Number of times sequence repeated (Total sequence can\'t exceed 10):</string>
+	<string name="flash_off">Number of milliseconds flash is off(should not exceed 500ms):</string>
+	<string name="repeats">Number of times sequence repeated (Can\'t exceed 5):</string>
 	<string name="bot_left">Create Pattern</string>
 	<!-- <string name="bot_center">Append to Prevoius Pattern</string> -->
 	<string name="bot_right">Test Current Pattern</string>
