@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class FlashNotificationAppTester extends Activity {
@@ -17,7 +18,7 @@ public class FlashNotificationAppTester extends Activity {
 	ArrayList<Integer> pattern3 = new ArrayList<Integer>();
 
 	//stores the previously tested custom pattern
-	ArrayList<Integer> prevPattern = new ArrayList<Integer>();
+	ArrayList<Integer> createdPattern = new ArrayList<Integer>();
 
 	//p1 - preset test 1
 	//p2 - preset test 2
@@ -27,9 +28,12 @@ public class FlashNotificationAppTester extends Activity {
 	//create - create a new pattern
 	//append - append the current pattern to previous pattern (there is a previous pattern)
 	//test - test the curent pattern
-	private Button create, append, test;
-	
-	//
+	private Button create, test;
+
+	//the three edit text fields
+	private EditText edit1, edit2, edit3;
+
+	private int on, off, repeats;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +44,9 @@ public class FlashNotificationAppTester extends Activity {
 		setupPreset2();
 		setupPreset3();
 
+		createPattern();
+		testPattern();
 
-
-		// three Buttons for custom tests
-		create = (Button) findViewById(R.id.create);
-		//append= (Button) findViewById(R.id.append);
-		test = (Button) findViewById(R.id.test);
 
 	}
 
@@ -103,14 +104,14 @@ public class FlashNotificationAppTester extends Activity {
 
 	private void setupPreset3(){
 		p3 = (Button) findViewById(R.id.button3);
-		
+
 		for (int i = 0; i < 2; i++){
 			pattern3.add(150);
 			pattern3.add(250);
 			pattern3.add(50);
 			pattern3.add(50);
 		}
-		
+
 		p3.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v){
@@ -128,14 +129,57 @@ public class FlashNotificationAppTester extends Activity {
 			}
 		});
 	}
-		
-	//for customs tests -- after the user has filled in the parameters for custom test
+
+	//for customs tests -- creates and stores pattern into createdPattern variable
 	public void createPattern(){
 		// dialog in textbox box will prompt user to input 
+		create = (Button) findViewById(R.id.create);
+
+		create.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v){
+				Toast.makeText(FlashNotificationAppTester.this, "Created pattern to display.", Toast.LENGTH_LONG).show();
+				edit1 = (EditText) findViewById(R.id.EditText1);
+				on = (new Integer(edit1.getText().toString())).intValue();
+				edit2 = (EditText) findViewById(R.id.EditText2);
+				off = (new Integer(edit2.getText().toString())).intValue();
+				edit3 = (EditText) findViewById(R.id.EditText3);
+				repeats = (new Integer(edit3.getText().toString())).intValue();
+
+				if (repeats > 5 ){
+					Toast.makeText(FlashNotificationAppTester.this, "Too many repeats.", Toast.LENGTH_LONG).show();
+					return;
+				}
+				else {
+					for (int i = 0; i < repeats; i++){
+						createdPattern.add(on);
+						createdPattern.add(off);
+					}
+				}
+			}
+		});
 
 	}
 
+	public void testPattern(){
+		test = (Button) findViewById(R.id.test);
 
-	//TODO: implement code that uses makes calls to the open API to make use of the pattern
+		test.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v){
+				Toast.makeText(FlashNotificationAppTester.this, "Displaying created pattern.", Toast.LENGTH_LONG).show();
+				Intent i = new Intent("com.leepapesweers.flashnotifier.API");
+
+				// Put flash pattern in request
+				i.putIntegerArrayListExtra("flash_pattern", createdPattern);
+
+				// Put sending application package name
+				i.putExtra("calling_application", getPackageName());
+
+				// Send the broadcast
+				sendBroadcast(i);
+			}
+		});
+	}
 
 }
