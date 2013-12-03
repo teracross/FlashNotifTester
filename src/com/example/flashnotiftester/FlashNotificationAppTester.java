@@ -150,7 +150,16 @@ public class FlashNotificationAppTester extends Activity {
 					Toast.makeText(FlashNotificationAppTester.this, "Too many repeats.", Toast.LENGTH_LONG).show();
 					return;
 				}
+				else if (on > 500){
+					Toast.makeText(FlashNotificationAppTester.this, "Milliseconds On exceeds 500ms limit", Toast.LENGTH_LONG).show();
+					return;
+				}
+				else if (off > 500){
+					Toast.makeText(FlashNotificationAppTester.this, "Milliseconds Off exceeds 500ms limit", Toast.LENGTH_LONG).show();
+					return;
+				}
 				else {
+					createdPattern = new ArrayList<Integer>();
 					for (int i = 0; i < repeats; i++){
 						createdPattern.add(on);
 						createdPattern.add(off);
